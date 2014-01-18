@@ -6,12 +6,14 @@
 
 (defparameter *words* `())
 
-(defun load-dict ()
+(defun load-dict (&optional (filter (lambda (x) t)))
   (defparameter *words* `(""))
   (let ((in (open *dict-location* :if-does-not-exist nil)))
     (when in
       (loop for line = (read-line in nil)
-         while line do (nconc *words* (list line)))
+         while line
+	 when (funcall filter line)
+	 do (nconc *words* (list line)))
       (close in))))
 
 (defun string-starts-with (input prefix-candidate)
