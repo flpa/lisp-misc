@@ -7,6 +7,7 @@
 (defparameter *words* `())
 
 (defun load-dict (&optional (filter (lambda (x) t)))
+  "Loads the dictionary defined by *dict-location* into *words*. Lines can be filtered by providing a filter-function."
   (defparameter *words* `(""))
   (let ((in (open *dict-location* :if-does-not-exist nil)))
     (when in
