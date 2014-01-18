@@ -6,6 +6,17 @@
 
 (defparameter *words* `())
 
+(defun load-dict-british-small ()
+  (defparameter *dict-location* "/usr/share/dict/british-english-small")
+  (load-dict `string-does-not-end-with-apostrophe-s))
+
+(defun string-does-not-end-with-apostrophe-s (x)
+  (not (and
+	(> (length x) 2)
+	(string= x "'s"
+		 :start1 (- (length x) 2)))))
+
+  
 (defun load-dict (&optional (filter (lambda (x) t)))
   "Loads the dictionary defined by *dict-location* into *words*. Lines can be filtered by providing a filter-function."
   (defparameter *words* `(""))
