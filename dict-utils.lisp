@@ -19,13 +19,13 @@
   
 (defun load-dict (&optional (filter (lambda (x) t)))
   "Loads the dictionary defined by *dict-location* into *words*. Lines can be filtered by providing a filter-function."
-  (defparameter *words* `(""))
   (let ((in (open *dict-location* :if-does-not-exist nil)))
     (when in
       (loop for line = (read-line in nil)
          while line
 	 when (funcall filter line)
-	 do (nconc *words* (list line)))
+	 collect line into lines
+	 finally (setf *words* lines))
       (close in))))
 
 (defun string-starts-with (input prefix-candidate)
